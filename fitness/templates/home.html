@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Welcome to Workout Tracker</h1>
+
+  <div>
+    {% for workout in workouts %}
+      <p><a href="{% url 'single_workout' workout_id=workout.id %}">Your horkout on {{ workout.date }}</a></p>
+    {% empty %}
+      <p>You don't have any horkouts.</p>
+    {% endfor %}
+  </div>
+
+{% endblock %}
