@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render
 from django.views import View
 
-from fitness.forms import ExerciseForm, WorkoutForm, WorkoutSetForm
+from fitness.forms import ExerciseForm, WorkoutForm
 from fitness.models import Workout
 
 
@@ -60,40 +60,40 @@ class NewWorkoutView(View):
         return redirect(reverse('new_workout_set', kwargs={'workout_id': obj.id}))
 
 
-class NewWorkoutSetView(View):
-    def get(self, request, workout_id):
-        if not request.user.is_authenticated:
-            return redirect(reverse('account_login'))
-        try:
-            workout = Workout.objects.get(user=request.user, id=workout_id)
-        except Workout.DoesNotExist:
-            messages.add_message(request, messages.ERROR, 'No horkout with id {}.'.format(workout_id))
-            return redirect(reverse('home'))
-        context = {
-            'form': WorkoutSetForm(initial={'workout': workout}),
-        }
-        return render(request, 'fitness/new_workout_set.html', context)
+# class NewWorkoutSetView(View):
+#     def get(self, request, workout_id):
+#         if not request.user.is_authenticated:
+#             return redirect(reverse('account_login'))
+#         try:
+#             workout = Workout.objects.get(user=request.user, id=workout_id)
+#         except Workout.DoesNotExist:
+#             messages.add_message(request, messages.ERROR, 'No horkout with id {}.'.format(workout_id))
+#             return redirect(reverse('home'))
+#         context = {
+#             'form': WorkoutSetForm(initial={'workout': workout}),
+#         }
+#         return render(request, 'fitness/new_workout_set.html', context)
 
-    def post(self, request, workout_id):
-        if not request.user.is_authenticated:
-            return redirect(reverse('account_login'))
-        try:
-            workout = Workout.objects.get(user=request.user, id=workout_id)
-        except Workout.DoesNotExist:
-            messages.add_message(request, messages.ERROR, 'No horkout with id {}.'.format(workout_id))
-            return redirect(reverse('home'))
-        form = WorkoutSetForm(request.POST, initial={'workout': workout})
-        if not form.is_valid():
-            context = {
-                'form': form,
-            }
-            return render(request, 'fitness/new_workout_set.html', context)
-        obj = form.save()
+#     def post(self, request, workout_id):
+#         if not request.user.is_authenticated:
+#             return redirect(reverse('account_login'))
+#         try:
+#             workout = Workout.objects.get(user=request.user, id=workout_id)
+#         except Workout.DoesNotExist:
+#             messages.add_message(request, messages.ERROR, 'No horkout with id {}.'.format(workout_id))
+#             return redirect(reverse('home'))
+#         form = WorkoutSetForm(request.POST, initial={'workout': workout})
+#         if not form.is_valid():
+#             context = {
+#                 'form': form,
+#             }
+#             return render(request, 'fitness/new_workout_set.html', context)
+#         obj = form.save()
 
-        if request.POST.get('add_another'):
-            # return self.get(request, workout_id)
-            return redirect(reverse('new_workout_set', kwargs={'workout_id': workout_id}))
+#         if request.POST.get('add_another'):
+#             # return self.get(request, workout_id)
+#             return redirect(reverse('new_workout_set', kwargs={'workout_id': workout_id}))
 
-        # add another workout set?
+#         # add another workout set?
 
-        return redirect((reverse('single_workout', kwargs={'workout_id': workout_id})))
+#         return redirect((reverse('single_workout', kwargs={'workout_id': workout_id})))

@@ -41,13 +41,10 @@ MODALITY_CHOICES = (
 class Exercise(models.Model):
     title = models.CharField(max_length=200)
     body_part = models.CharField(max_length=50, choices=BODY_PART_CHOICES)
-    variation = models.CharField(max_length=100, blank=True, null=True)
     modality = models.CharField(max_length=50, help_text='Method of exercise',
                                 choices=MODALITY_CHOICES)
 
     def __str__(self):
-        if self.variation:
-            return '{} {}'.format(self.title, self.variation)
         return self.title
 
 
@@ -64,17 +61,23 @@ class Workout(models.Model):
 
 
 
-class WorkoutSet(models.Model):
+class ResistanceScheme(models.Model):
     workout = models.ForeignKey(Workout)
     exercise = models.ForeignKey(Exercise)
-    reps = models.IntegerField()
+    variation = models.CharField(max_length=100, blank=True, null=True)
     rep_style = models.CharField(max_length=20, choices=REP_STYLE_CHOICES)
     notes = models.TextField(null=True, blank=True)
+
+    # def __str__(self):
+    #     return '{} x {} @ {}'.format(self.sets, self.reps, self.load)
+
+
+
+class ResistanceSet(models.Model):
+    scheme = models.ForeignKey(ResistanceScheme)
+    reps = models.IntegerField()
     intensity = models.IntegerField()
     load = models.IntegerField(help_text='Weight in pounds')
-
-    def __str__(self):
-        return '{} x {} @ {}'.format(self.sets, self.reps, self.load)
 
     @property
     def work(self):
@@ -83,10 +86,67 @@ class WorkoutSet(models.Model):
         else:
             return ''
 
-    def rep_style(self):
+    def set_rep_style(self):
         if self.reps > 0 and self.reps <= 5:
             return 'Strength/Power'
         if self.reps > 5 and self.reps <= 12:
             return 'Hypertrophy'
         if self.reps > 12:
             return 'Endurance'
+
+
+class CardioScheme(models.Model):
+    workout = models.ForeignKey(Workout)
+    exercise = models.ForeignKey(Exercise)
+    variation = models.CharField(max_length=100, blank=True, null=True)
+    notes = models.TextField(null=True, blank=True)
+
+
+class CardioDistance(models.Model):
+    scheme = models.ForeignKey(CardioScheme)
+    start = models.TimeField(null=True, blank=True)
+    stop = models.TimeField(null=True, blank=True)
+    distance = models.FloatField()
+    measurement = models.CharField(max_length=200)
+    # TODO - add choices for measurement field
+
+
+class CardioInterval(models.Model):
+    scheme = models.ForeignKey(CardioScheme)
+    action_start = models.TimeField(null=True, blank=True)
+    action_stop = models.TimeField(null=True, blank=True)
+    rest_start = models.TimeField(null=True, blank=True)
+    rest_stop = models.TimeField(null=True, blank=True)
+    # TODO create method to populate start and stop time length entry (ex. 5 min 10 sec)
+
+
+class CardioRepetition(models.Model):
+    scheme = models.ForeignKey(CardioScheme)
+    quanity = models.IntegerField()
+    start = models.TimeField(null=True, blank=True)
+    stop = models.TimeField(null=True, blank=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
