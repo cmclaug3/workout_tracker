@@ -7,7 +7,7 @@
   <ul>
     {% for workout_set in workout.workoutset_set.all %}
       <li>
-        {{ workout_set.exercise.title }}, {{ workout_set.reps }}, {{ workout_set.load }}
+        {{ workout_set.exercise.title }}, {{ workout_set.reps }} Reps, {{ workout_set.load }}lbs, {{ workout_set.work }} work
         {% if workout_set.notes %}
           <p>{{ workout_set.notes }}</p>
         {% endif %}

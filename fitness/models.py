@@ -69,3 +69,7 @@ class WorkoutSet(models.Model):
     notes = models.TextField(null=True, blank=True)
     intensity = models.IntegerField()
     load = models.IntegerField(help_text='Weight in pounds')
+
+    @property
+    def work(self):
+        return (self.load * self.reps * 0.033) + self.load
