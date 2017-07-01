@@ -56,6 +56,10 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.stackexchange',
     # 'allauth.socialaccount.providers.twitter',
 
+    # Development
+    'django_extensions',
+
+    # Project
     'fitness',
 ]
 
