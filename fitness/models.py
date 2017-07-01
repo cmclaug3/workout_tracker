@@ -43,6 +43,7 @@ class Exercise(models.Model):
     body_part = models.CharField(max_length=50, choices=BODY_PART_CHOICES)
     modality = models.CharField(max_length=50, help_text='Method of exercise',
                                 choices=MODALITY_CHOICES)
+    # TODO: add field for exercise type
 
     def __str__(self):
         return self.title
