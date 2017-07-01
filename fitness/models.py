@@ -56,9 +56,12 @@ class Workout(models.Model):
     user = models.ForeignKey(User)
     notes = models.TextField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['-date']
+
     def __str__(self):
-        return '{} on {}'.format(self.user.username,
-                                 datetime.strftime(self.date, '%Y-%m-%d'))
+        return '{} on {}'.format(self.user.username, datetime.strftime(self.date, '%m-%d-%Y'))
+
 
 
 class WorkoutSet(models.Model):
@@ -70,6 +73,20 @@ class WorkoutSet(models.Model):
     intensity = models.IntegerField()
     load = models.IntegerField(help_text='Weight in pounds')
 
+    def __str__(self):
+        return '{} x {} @ {}'.format(self.sets, self.reps, self.load)
+
     @property
     def work(self):
-        return (self.load * self.reps * 0.033) + self.load
+        if self.reps <= 12:
+            return int((self.reps * self.load * .033) + self.load)
+        else:
+            return ''
+
+    def rep_style(self):
+        if self.reps > 0 and self.reps <= 5:
+            return 'Strength/Power'
+        if self.reps > 5 and self.reps <= 12:
+            return 'Hypertrophy'
+        if self.reps > 12:
+            return 'Endurance'
