@@ -68,15 +68,15 @@ class ResistanceScheme(models.Model):
     rep_style = models.CharField(max_length=20, choices=REP_STYLE_CHOICES)
     notes = models.TextField(null=True, blank=True)
 
-    # def __str__(self):
-    #     return '{} x {} @ {}'.format(self.sets, self.reps, self.load)
+    def __str__(self):
+        return '{} | {}'.format(self.workout, self.exercise)
 
 
 
 class ResistanceSet(models.Model):
     scheme = models.ForeignKey(ResistanceScheme)
     reps = models.IntegerField()
-    intensity = models.IntegerField()
+    intensity = models.FloatField()
     load = models.IntegerField(help_text='Weight in pounds')
 
     @property
@@ -94,12 +94,18 @@ class ResistanceSet(models.Model):
         if self.reps > 12:
             return 'Endurance'
 
+    def __str__(self):
+        return '{} - {} @ {}'.format(self.scheme, self.reps, self.load)
+
 
 class CardioScheme(models.Model):
     workout = models.ForeignKey(Workout)
     exercise = models.ForeignKey(Exercise)
     variation = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return ''
 
 
 class CardioDistance(models.Model):
