@@ -1,0 +1,230 @@
+[
+{
+    "model": "fitness.exercise",
+    "pk": 1,
+    "fields": {
+        "title": "Bench Press",
+        "body_part": "arms",
+        "modality": "barbell"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 2,
+    "fields": {
+        "title": "Leg Press",
+        "body_part": "legs",
+        "modality": "machine"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 3,
+    "fields": {
+        "title": "Pull Ups",
+        "body_part": "arms",
+        "modality": "body-weight"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 4,
+    "fields": {
+        "title": "Push Ups",
+        "body_part": "arms",
+        "modality": "body-weight"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 5,
+    "fields": {
+        "title": "pull ups",
+        "body_part": "arms",
+        "modality": "body weight"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 1,
+    "fields": {
+        "date": "2017-06-22",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 2,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": "these are some notes"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 3,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": "more notes"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 4,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": "kjh"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 5,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 6,
+    "fields": {
+        "date": "2017-07-04",
+        "user": 3,
+        "notes": "this is workout 1"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 1,
+    "fields": {
+        "workout": 1,
+        "exercise": 1,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 2,
+    "fields": {
+        "workout": 2,
+        "exercise": 1,
+        "variation": null,
+        "notes": "whoah",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 3,
+    "fields": {
+        "workout": 3,
+        "exercise": 3,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 4,
+    "fields": {
+        "workout": 3,
+        "exercise": 1,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 5,
+    "fields": {
+        "workout": 4,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 6,
+    "fields": {
+        "workout": 5,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 7,
+    "fields": {
+        "workout": 5,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 8,
+    "fields": {
+        "workout": 5,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 9,
+    "fields": {
+        "workout": 6,
+        "exercise": 5,
+        "variation": null,
+        "notes": null,
+        "rep_style": ""
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 1,
+    "fields": {
+        "scheme": 9,
+        "reps": 20,
+        "intensity": 80,
+        "load": 160
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 2,
+    "fields": {
+        "scheme": 9,
+        "reps": 12,
+        "intensity": 80,
+        "load": 160
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 3,
+    "fields": {
+        "scheme": 9,
+        "reps": 8,
+        "intensity": 80,
+        "load": 160
+    }
+}
+]
