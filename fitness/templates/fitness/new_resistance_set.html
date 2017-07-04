@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="POST">
+    {{ form.as_p }}
+      <br>
+    <input type="submit" value="Save and add Scheme"/>
+      <br><br>
+    <input type="submit" name="add_another" value="Save and Add Another"/>
+      <br><br>
+    <input type="submit" name="save_review" value="Save and Review Workout"/>
+    {% csrf_token %}
+  </form>
+
+{% endblock %}

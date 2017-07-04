@@ -3,7 +3,8 @@
 {% block content %}
 
   <form method="POST">
-    {{ form }}
+    {{ form.as_p }}
+      <br>
     <input type="submit" value="Save"/>
     {% csrf_token %}
   </form>

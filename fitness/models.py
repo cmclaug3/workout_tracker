@@ -71,7 +71,11 @@ class WorkoutScheme(models.Model):
         abstract = True
 
 
-class ResistanceScheme(WorkoutScheme):
+class ResistanceScheme(models.Model):
+    workout = models.ForeignKey(Workout)
+    exercise = models.ForeignKey(Exercise)
+    variation = models.CharField(max_length=100, blank=True, null=True)
+    notes = models.TextField(null=True, blank=True)
     rep_style = models.CharField(max_length=20, choices=REP_STYLE_CHOICES)
 
     # def __str__(self):

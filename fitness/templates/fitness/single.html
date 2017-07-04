@@ -5,14 +5,22 @@
   <h1>Your workout on {{ workout.date }}</h1>
 
   <ul>
-    {% for workout_set in workout.workoutset_set.all %}
+    {% for resistance_scheme in workout.resistancescheme_set.all %}
       <li>
-        {{ workout_set.exercise.title }}, {{ workout_set.reps }} Reps, {{ workout_set.load }}lbs, {{ workout_set.work }} work
-        {% if workout_set.notes %}
-          <p>{{ workout_set.notes }}</p>
+        {{ resistance_scheme.exercise.title }}
+        <ul>
+          {% for resistance_set in resistance_scheme.resistanceset_set.all %}
+            <li>{{ resistance_set.reps }} Reps, {{ resistance_set.load }}lbs, {{ resistance_set.work }} work</li>
+          {% endfor %}
+        </ul>
+        {% if resistance_scheme.notes %}
+          <p>{{ resistance_scheme.notes }}</p>
         {% endif %}
       </li>
     {% endfor %}
   </ul>
+
+  <br><br><br>
+  <a href="{% url 'new_resistance_scheme' workout.id %}">Add Workout Scheme</a>
 
 {% endblock %}
