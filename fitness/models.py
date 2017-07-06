@@ -62,7 +62,6 @@ class Workout(models.Model):
 
 
 class WorkoutScheme(models.Model):
-    workout = models.ForeignKey(Workout)
     exercise = models.ForeignKey(Exercise)
     variation = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
@@ -72,7 +71,7 @@ class WorkoutScheme(models.Model):
 
 
 class ResistanceScheme(models.Model):
-    workout = models.ForeignKey(Workout)
+    workout = models.ForeignKey(Workout, related_name='resistance_scheme')
     exercise = models.ForeignKey(Exercise)
     variation = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
@@ -83,7 +82,7 @@ class ResistanceScheme(models.Model):
 
 
 class ResistanceSet(models.Model):
-    scheme = models.ForeignKey(ResistanceScheme)
+    scheme = models.ForeignKey(ResistanceScheme, related_name='resistance_set')
     reps = models.IntegerField()
     intensity = models.IntegerField()
     load = models.IntegerField(help_text='Weight in pounds')
@@ -105,11 +104,11 @@ class ResistanceSet(models.Model):
 
 
 class CardioScheme(WorkoutScheme):
-    pass
+    workout = models.ForeignKey(Workout, related_name='cardio_scheme')
 
 
 class CardioDistance(models.Model):
-    scheme = models.ForeignKey(CardioScheme)
+    scheme = models.ForeignKey(CardioScheme, related_name='distance_set')
     start = models.TimeField(blank=True, null=True)
     stop = models.TimeField(blank=True, null=True)
     distance = models.FloatField()
@@ -118,7 +117,7 @@ class CardioDistance(models.Model):
 
 
 class CardioInterval(models.Model):
-    scheme = models.ForeignKey(CardioScheme)
+    scheme = models.ForeignKey(CardioScheme, related_name='interval_set')
     action_start = models.TimeField(blank=True, null=True)
     action_stop = models.TimeField(blank=True, null=True)
     rest_start = models.TimeField(blank=True, null=True)
@@ -128,7 +127,7 @@ class CardioInterval(models.Model):
 
 
 class CardioRepetition(models.Model):
-    scheme = models.ForeignKey(CardioScheme)
+    scheme = models.ForeignKey(CardioScheme, related_name='repetition_set')
     quantity = models.IntegerField()
     start = models.TimeField(blank=True, null=True)
     stop = models.TimeField(blank=True, null=True)

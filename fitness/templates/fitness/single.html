@@ -5,11 +5,11 @@
   <h1>Your workout on {{ workout.date }}</h1>
 
   <ul>
-    {% for resistance_scheme in workout.resistancescheme_set.all %}
+    {% for resistance_scheme in workout.resistance_scheme.all %}
       <li>
         {{ resistance_scheme.exercise.title }}
         <ul>
-          {% for resistance_set in resistance_scheme.resistanceset_set.all %}
+          {% for resistance_set in resistance_scheme.resistance_set.all %}
             <li>{{ resistance_set.reps }} Reps, {{ resistance_set.load }}lbs, {{ resistance_set.work }} work</li>
           {% endfor %}
         </ul>
