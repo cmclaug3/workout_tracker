@@ -77,8 +77,9 @@ class ResistanceScheme(models.Model):
     notes = models.TextField(null=True, blank=True)
     rep_style = models.CharField(max_length=20, choices=REP_STYLE_CHOICES)
 
-    # def __str__(self):
-    #     return '{} x {} @ {}'.format(self.sets, self.reps, self.load)
+    def __str__(self):
+        return '{} - {}'.format(datetime.strftime(self.workout.date, '%m-%d-%Y'),
+                                self.exercise)
 
 
 class ResistanceSet(models.Model):
@@ -92,7 +93,7 @@ class ResistanceSet(models.Model):
         if self.reps <= 12:
             return int((self.reps * self.load * .033) + self.load)
         else:
-            return ''
+            return 'too many reps to calculate'
 
     def set_rep_style(self):
         if self.reps > 0 and self.reps <= 5:

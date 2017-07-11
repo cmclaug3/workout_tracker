@@ -124,7 +124,7 @@ class ResistanceSetView(View):
         # form = ResistanceSetForm(request.POST, initial={'scheme': scheme})
         if not form_set.is_valid():
             context = {
-                'form': form_set,
+                'form_set': form_set,
             }
             return render(request, 'fitness/new_resistance_set.html', context)
         for form in form_set.forms:

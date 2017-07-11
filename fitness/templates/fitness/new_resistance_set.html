@@ -3,15 +3,12 @@
 {% block content %}
 
     <form method="POST">
-{#    {{ form_set.management_form }}#}
-
-{#      {{ form_set }}#}
-
     {{ form_set.management_form }}
     {% for form in form_set %}
       {{ form.as_p }}
       <br>
     {% endfor %}
+
     <input type="submit" value="Save and add Scheme"/>
       <br><br>
     <input type="submit" name="add_another" value="Save and Add Another"/>
