@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -94,6 +95,8 @@ class ResistanceSchemeView(View):
 
 
 class ResistanceSetView(View):
+    form_set = formset_factory(ResistanceSetForm, extra=2)
+
     def get(self, request, scheme_id):
         if not request.user.is_authenticated:
             return redirect(reverse('account_login'))
@@ -103,7 +106,8 @@ class ResistanceSetView(View):
             messages.add_message(request, messages.ERROR, 'No ResistanceScheme with id {}.'.format(scheme_id))
             return redirect(reverse('home'))
         context = {
-            'form': ResistanceSetForm(initial={'scheme': scheme}),
+            # 'form_set': form_set(),
+            'form_set': self.form_set(initial=[{'scheme': scheme}, ]),
         }
         return render(request, 'fitness/new_resistance_set.html', context)
 
@@ -115,13 +119,16 @@ class ResistanceSetView(View):
         except ResistanceScheme.DoesNotExist:
             messages.add_message(request, messages.ERROR, 'No ResistanceScheme with id {}.'.format(scheme_id))
             return redirect(reverse('home'))
-        form = ResistanceSetForm(request.POST, initial={'scheme': scheme})
-        if not form.is_valid():
+        form_set = self.form_set(request.POST)
+        # form_set = self.form_set(request.POST, initial=[{'scheme': scheme}, ])
+        # form = ResistanceSetForm(request.POST, initial={'scheme': scheme})
+        if not form_set.is_valid():
             context = {
-                'form': form,
+                'form': form_set,
             }
             return render(request, 'fitness/new_resistance_set.html', context)
-        workout_set = form.save()
+        for form in form_set.forms:
+            workout_set = form.save()
 
         if request.POST.get('add_another'):
             # return self.get(request, workout_id)
