@@ -5,9 +5,10 @@
   <form method="POST">
     {{ form.as_p }}
       <br>
-    <input type="submit" name="resist" value="Add Resistance Scheme"/>
-    <br>
-    <input type="submit" name="cardio" value="Add Cardio Scheme"/>
+
+    Number of sets: <input type="text" name="num_sets"/>
+    <br><br>
+    <input type="submit" value="Save"/>
     {% csrf_token %}
   </form>
 

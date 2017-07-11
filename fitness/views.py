@@ -58,7 +58,15 @@ class NewWorkoutView(View):
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
-        return redirect(reverse('new_resistance_scheme', kwargs={'workout_id': obj.id}))
+
+        if request.POST.get('resist'):
+            return redirect(reverse('new_resistance_scheme', kwargs={'workout_id': obj.id}))
+        elif request.POST.get('cardio'):
+            # TODO: update to point to new_cardio_scheme
+            return redirect(reverse('new_resistance_scheme', kwargs={'workout_id': obj.id}))
+        else:
+            messages.warning(request, 'Resistance is futile?')
+            return redirect(reverse('home'))
 
 
 class ResistanceSchemeView(View):
@@ -73,7 +81,7 @@ class ResistanceSchemeView(View):
         context = {
             'form': ResistanceSchemeForm(initial={'workout': workout}),
         }
-        return render(request, 'fitness/new_workout_set.html', context)
+        return render(request, 'fitness/new_workout_scheme.html', context)
 
     def post(self, request, workout_id):
         if not request.user.is_authenticated:
@@ -88,10 +96,20 @@ class ResistanceSchemeView(View):
             context = {
                 'form': form,
             }
-            return render(request, 'fitness/new_workout_set.html', context)
+            return render(request, 'fitness/new_workout_scheme.html', context)
         scheme = form.save()
 
-        return redirect((reverse('new_resistance_set', kwargs={'scheme_id': scheme.id})))
+        if request.POST.get('num_sets'):
+            num_sets = request.POST.get('num_sets')
+            try:
+                num_sets = int(num_sets)
+                return redirect('{}?num_sets={}'.format(
+                    reverse('new_resistance_set', kwargs={'scheme_id': scheme.id}),
+                    num_sets))
+            except TypeError:
+                pass
+
+        return redirect(reverse('new_resistance_set', kwargs={'scheme_id': scheme.id}))
 
 
 class ResistanceSetView(View):
@@ -100,6 +118,15 @@ class ResistanceSetView(View):
     def get(self, request, scheme_id):
         if not request.user.is_authenticated:
             return redirect(reverse('account_login'))
+
+        num_sets = request.GET.get('num_sets', False)
+        if num_sets:
+            try:
+                num_sets = int(num_sets)
+                self.form_set = formset_factory(ResistanceSetForm, extra=num_sets-1)
+            except TypeError:
+                pass
+
         try:
             scheme = ResistanceScheme.objects.get(workout__user=request.user, id=scheme_id)
         except ResistanceScheme.DoesNotExist:

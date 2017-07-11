@@ -122,9 +122,13 @@ class CardioInterval(models.Model):
     action_start = models.TimeField(blank=True, null=True)
     action_stop = models.TimeField(blank=True, null=True)
     rest_start = models.TimeField(blank=True, null=True)
-    rest_stop  = models.TimeField(blank=True, null=True)
+    rest_stop = models.TimeField(blank=True, null=True)
 
-    # TODO: create method to populate start/stop time based on time length entry (ie: 5 minutes 10 seconds)
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if getattr(self, 'action_time', False):
+            import ipdb
+            ipdb.set_trace()
+        super(CardioInterval, self).save(force_insert, force_update, using, update_fields)
 
 
 class CardioRepetition(models.Model):
