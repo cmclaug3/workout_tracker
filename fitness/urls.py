@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
-from fitness.views import home, NewWorkoutView, single_workout, ResistanceSchemeView, ResistanceSetView
+from fitness.views import home, new_cardio_interval, new_cardio_scheme,\
+    NewWorkoutView, single_workout, ResistanceSchemeView, ResistanceSetView
 
 urlpatterns = [
     url(r'^workout/(?P<workout_id>[0-9]+)$', single_workout, name='single_workout'),
@@ -9,5 +10,7 @@ urlpatterns = [
         name='new_resistance_scheme'),
     url(r'^new_resistance_set/(?P<scheme_id>[0-9]+)$', ResistanceSetView.as_view(), name='new_resistance_set'),
     # url(r'^new_workout_set/(?P<workout_id>[0-9]+)$', NewWorkoutSetView.as_view(), name='new_workout_set'),
+    url(r'^new_cardio_scheme/(?P<workout_id>[0-9]+)$', new_cardio_scheme, name='new_cardio_scheme'),
+    url(r'^new_cardio_interval/(?P<scheme_id>[0-9]+)$', new_cardio_interval, name='new_cardio_interval'),
     url(r'^$', home, name='home'),
 ]

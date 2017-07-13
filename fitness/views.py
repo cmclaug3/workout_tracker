@@ -7,8 +7,8 @@ from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views import View
 
-from fitness.forms import ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
-from fitness.models import ResistanceScheme, Workout
+from fitness.forms import CardioIntervalForm, CardioSchemeForm, ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
+from fitness.models import CardioScheme, ResistanceScheme, Workout
 
 
 def home(request):
@@ -55,19 +55,23 @@ class NewWorkoutView(View):
                 'form': form,
             }
             return render(request, 'fitness/new_workout.html', context)
-        obj = form.save(commit=False)
-        obj.user = request.user
-        obj.save()
+        # next 3 lines are largely equivalent
+        # workout_obj = Workout(date='TODAYS DATE', notes='notes from user')
+        # workout_obj = Workout(date=request.POST.get('date'), notes=request.POST.get('notes'))
+        workout_obj = form.save(commit=False)
+        workout_obj.user = request.user
+        workout_obj.save()
 
         if request.POST.get('resist'):
-            return redirect(reverse('new_resistance_scheme', kwargs={'workout_id': obj.id}))
+            return redirect(reverse('new_resistance_scheme', kwargs={'workout_id': workout_obj.id}))
         elif request.POST.get('cardio'):
-            # TODO: update to point to new_cardio_scheme
-            return redirect(reverse('new_resistance_scheme', kwargs={'workout_id': obj.id}))
+            return redirect(reverse('new_cardio_scheme', kwargs={'workout_id': workout_obj.id}))
         else:
             messages.warning(request, 'Resistance is futile?')
             return redirect(reverse('home'))
 
+
+# Resistance #
 
 class ResistanceSchemeView(View):
     def get(self, request, workout_id):
@@ -169,40 +173,63 @@ class ResistanceSetView(View):
 
         return redirect(reverse('new_resistance_scheme', kwargs={'workout_id': workout_set.scheme.workout.id}))
 
-# class NewWorkoutSetView(View):
-#     def get(self, request, workout_id):
-#         if not request.user.is_authenticated:
-#             return redirect(reverse('account_login'))
-#         try:
-#             workout = Workout.objects.get(user=request.user, id=workout_id)
-#         except Workout.DoesNotExist:
-#             messages.add_message(request, messages.ERROR, 'No horkout with id {}.'.format(workout_id))
-#             return redirect(reverse('home'))
-#         context = {
-#             'form': WorkoutSetForm(initial={'workout': workout}),
-#         }
-#         return render(request, 'fitness/new_workout_set.html', context)
+
+# Cardio #
+
+def new_cardio_scheme(request, workout_id):
+    workout = Workout.objects.get(user=request.user, id=workout_id)
+    form = CardioSchemeForm(initial={'workout': workout})
+    if request.method == 'POST':
+        form = CardioSchemeForm(request.POST, initial={'workout': workout})
+        if form.is_valid():
+            scheme = form.save()
+            if request.POST.get('cardio_interval'):
+                return redirect(reverse('new_cardio_interval', kwargs={'scheme_id': scheme.id}))
+            # elif request.POST.get('cardio_repetition'):
+            #     return redirect(reverse('new_cardio_repetition', kwargs={'scheme_id': scheme.id}))
+            # elif request.POST.get('cardio_distance'):
+            #     return redirect(reverse('new_cardio_distance', kwargs={'scheme_id': scheme.id}))
+            else:
+                messages.success(request, 'New Cardio Scheme Saved')
+                return redirect(reverse('single_workout', kwargs={'workout_id': workout_id}))
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'fitness/new_cardio_scheme.html', context)
+
+
+# def new_cardio_scheme(request, workout_id):
+#     if not request.user.is_authenticated:
+#         return redirect(reverse('account_login'))
+#     try:
+#         workout = Workout.objects.get(user=request.user, id=workout_id)
+#     except Workout.DoesNotExist:
+#         messages.add_message(request, messages.ERROR, 'No horkout with id {}.'.format(workout_id))
+#         return redirect(reverse('home'))
+#     form = CardioSchemeForm(initial={'workout': workout}),
+#     if request.method == 'POST':
+#         form = CardioSchemeForm(request.POST, initial={'workout': workout})
+#         if form.is_valid():
+#             scheme = form.save()
+#             # TODO : handle create set step
 #
-#     def post(self, request, workout_id):
-#         if not request.user.is_authenticated:
-#             return redirect(reverse('account_login'))
-#         try:
-#             workout = Workout.objects.get(user=request.user, id=workout_id)
-#         except Workout.DoesNotExist:
-#             messages.add_message(request, messages.ERROR, 'No horkout with id {}.'.format(workout_id))
-#             return redirect(reverse('home'))
-#         form = WorkoutSetForm(request.POST, initial={'workout': workout})
-#         if not form.is_valid():
-#             context = {
-#                 'form': form,
-#             }
-#             return render(request, 'fitness/new_workout_set.html', context)
-#         obj = form.save()
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'fitness/new_cardio_scheme.html', context)
 #
-#         if request.POST.get('add_another'):
-#             # return self.get(request, workout_id)
-#             return redirect(reverse('new_workout_set', kwargs={'workout_id': workout_id}))
 #
-#         # add another workout set?
-#
-#         return redirect((reverse('single_workout', kwargs={'workout_id': workout_id})))
+def new_cardio_interval(request, scheme_id):
+    scheme = CardioScheme.objects.get(workout__user=request.user, id=scheme_id)
+    form = CardioIntervalForm(initial={'scheme': scheme})
+    if request.method == 'POST':
+        form = CardioIntervalForm(request.POST, initial={'scheme': scheme})
+        if form.is_valid():
+            form.save()
+            # TODO: do something with user from here
+            messages.success(request, 'You saved it')
+    context = {
+        'form': form,
+    }
+    return render(request, 'fitness/new_cardio_interval.html', context)

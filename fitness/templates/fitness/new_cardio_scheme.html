@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <form method="POST">
+    {{ form.as_p }}
+      <br>
+
+    <input type="submit" value="Add Interval" name="cardio_interval"/>
+      <br>
+      <br>
+    <input type="submit" value="Add Repetition" name="cardio_repetition"/>
+      <br>
+      <br>
+    <input type="submit" value="Add Distance" name="cardio_distance"/>
+      <br>
+      <br>
+    <input type="submit" value="Save"/>
+      <br>
+    {% csrf_token %}
+  </form>
+
+{% endblock %}

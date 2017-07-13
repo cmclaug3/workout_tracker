@@ -24,6 +24,7 @@ class ResistanceSchemeForm(forms.ModelForm):
             'notes'
         )
 
+
 class ResistanceSetForm(forms.ModelForm):
     class Meta:
         model = ResistanceSet
@@ -31,31 +32,35 @@ class ResistanceSetForm(forms.ModelForm):
             'scheme', 'reps', 'intensity', 'load'
         )
 
-# class CardioSchemeForm(forms.ModelForm):
-#     class Meta:
-#         model = CardioScheme
-#         fields = (
-#             'workout', 'exercise', 'variation', 'notes'
-#         )
-#
-# class CardioDistanceForm(forms.ModelForm):
-#     class Meta:
-#         model = CardioDistance
-#         fields = (
-#             'scheme', 'start', 'stop', 'distance', 'measurement'
-#         )
-#
-# class CardioIntervalForm(forms.ModelForm):
-#     class Meta:
-#         model = CardioInterval
-#         fields = (
-#             'scheme', 'action_start', 'action_stop', 'rest_start',
-#             'rest_stop'
-#         )
-#
-# class CardioRepetitionForm(forms.ModelForm):
-#     class Meta:
-#         model = CardioRepetition
-#         fields = (
-#             'scheme', 'quantity', 'start', 'stop'
-#         )
+
+class CardioSchemeForm(forms.ModelForm):
+    class Meta:
+        model = CardioScheme
+        fields = (
+            'workout', 'exercise', 'notes'
+        )
+
+
+class CardioDistanceForm(forms.ModelForm):
+    class Meta:
+        model = CardioDistance
+        fields = (
+            'scheme', 'start', 'stop', 'distance', 'measurement'
+        )
+
+
+class CardioIntervalForm(forms.ModelForm):
+    class Meta:
+        model = CardioInterval
+        fields = (
+            'scheme', 'action_start', 'action_stop', 'rest_start',
+            'rest_stop'
+        )
+
+
+class CardioRepetitionForm(forms.ModelForm):
+    class Meta:
+        model = CardioRepetition
+        fields = (
+            'scheme', 'quantity', 'start', 'stop'
+        )
