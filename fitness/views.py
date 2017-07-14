@@ -7,7 +7,7 @@ from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views import View
 
-from fitness.forms import CardioIntervalForm, CardioSchemeForm, ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
+from fitness.forms import CardioRepetitionForm, CardioIntervalForm, CardioSchemeForm, ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
 from fitness.models import CardioScheme, ResistanceScheme, Workout
 
 
@@ -185,8 +185,8 @@ def new_cardio_scheme(request, workout_id):
             scheme = form.save()
             if request.POST.get('cardio_interval'):
                 return redirect(reverse('new_cardio_interval', kwargs={'scheme_id': scheme.id}))
-            # elif request.POST.get('cardio_repetition'):
-            #     return redirect(reverse('new_cardio_repetition', kwargs={'scheme_id': scheme.id}))
+            elif request.POST.get('cardio_repetition'):
+                return redirect(reverse('new_cardio_repetition', kwargs={'scheme_id': scheme.id}))
             # elif request.POST.get('cardio_distance'):
             #     return redirect(reverse('new_cardio_distance', kwargs={'scheme_id': scheme.id}))
             else:
@@ -233,3 +233,10 @@ def new_cardio_interval(request, scheme_id):
         'form': form,
     }
     return render(request, 'fitness/new_cardio_interval.html', context)
+
+
+
+
+
+
+    

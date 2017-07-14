@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Thirdparty authentication
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
     # 'allauth.socialaccount.providers.evernote',
     # 'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.github',

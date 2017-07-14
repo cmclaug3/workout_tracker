@@ -75,7 +75,7 @@ class ResistanceScheme(models.Model):
     exercise = models.ForeignKey(Exercise)
     variation = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
-    rep_style = models.CharField(max_length=20, choices=REP_STYLE_CHOICES)
+    rep_style = models.CharField(max_length=20, blank=True, null=True, choices=REP_STYLE_CHOICES)
 
     def __str__(self):
         return '{} - {}'.format(datetime.strftime(self.workout.date, '%m-%d-%Y'),
