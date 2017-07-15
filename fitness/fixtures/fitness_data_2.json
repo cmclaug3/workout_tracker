@@ -1,0 +1,693 @@
+[
+{
+    "model": "fitness.exercise",
+    "pk": 1,
+    "fields": {
+        "title": "Bench Press",
+        "body_part": "arms",
+        "modality": "barbell"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 2,
+    "fields": {
+        "title": "Leg Press",
+        "body_part": "legs",
+        "modality": "machine"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 3,
+    "fields": {
+        "title": "Pull Ups",
+        "body_part": "arms",
+        "modality": "body-weight"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 4,
+    "fields": {
+        "title": "Push Ups",
+        "body_part": "arms",
+        "modality": "body-weight"
+    }
+},
+{
+    "model": "fitness.exercise",
+    "pk": 5,
+    "fields": {
+        "title": "pull ups",
+        "body_part": "arms",
+        "modality": "body weight"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 1,
+    "fields": {
+        "date": "2017-06-22",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 2,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": "these are some notes"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 3,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": "more notes"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 4,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": "kjh"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 5,
+    "fields": {
+        "date": "2017-06-29",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 6,
+    "fields": {
+        "date": "2017-07-04",
+        "user": 3,
+        "notes": "this is workout 1"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 7,
+    "fields": {
+        "date": "2017-07-06",
+        "user": 1,
+        "notes": "my notes"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 8,
+    "fields": {
+        "date": "2017-07-06",
+        "user": 1,
+        "notes": "my notes"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 9,
+    "fields": {
+        "date": "2017-07-11",
+        "user": 1,
+        "notes": "monday"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 10,
+    "fields": {
+        "date": "2017-07-10",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 11,
+    "fields": {
+        "date": "2017-07-09",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 12,
+    "fields": {
+        "date": "2017-07-11",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 13,
+    "fields": {
+        "date": "2017-07-07",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 14,
+    "fields": {
+        "date": "2017-07-13",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 15,
+    "fields": {
+        "date": "2017-07-12",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 16,
+    "fields": {
+        "date": "2017-07-15",
+        "user": 1,
+        "notes": "ooga"
+    }
+},
+{
+    "model": "fitness.workout",
+    "pk": 17,
+    "fields": {
+        "date": "2017-07-15",
+        "user": 1,
+        "notes": ""
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 1,
+    "fields": {
+        "workout": 1,
+        "exercise": 1,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 2,
+    "fields": {
+        "workout": 2,
+        "exercise": 1,
+        "variation": null,
+        "notes": "whoah",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 3,
+    "fields": {
+        "workout": 3,
+        "exercise": 3,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 4,
+    "fields": {
+        "workout": 3,
+        "exercise": 1,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 5,
+    "fields": {
+        "workout": 4,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 6,
+    "fields": {
+        "workout": 5,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 7,
+    "fields": {
+        "workout": 5,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 8,
+    "fields": {
+        "workout": 5,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 9,
+    "fields": {
+        "workout": 6,
+        "exercise": 5,
+        "variation": null,
+        "notes": null,
+        "rep_style": ""
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 10,
+    "fields": {
+        "workout": 8,
+        "exercise": 3,
+        "variation": null,
+        "notes": "",
+        "rep_style": "endurance"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 11,
+    "fields": {
+        "workout": 8,
+        "exercise": 4,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 12,
+    "fields": {
+        "workout": 9,
+        "exercise": 3,
+        "variation": null,
+        "notes": "",
+        "rep_style": "str"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 13,
+    "fields": {
+        "workout": 9,
+        "exercise": 3,
+        "variation": null,
+        "notes": "",
+        "rep_style": "power"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 14,
+    "fields": {
+        "workout": 10,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 15,
+    "fields": {
+        "workout": 11,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 16,
+    "fields": {
+        "workout": 11,
+        "exercise": 2,
+        "variation": null,
+        "notes": "",
+        "rep_style": "hypertrophy"
+    }
+},
+{
+    "model": "fitness.resistancescheme",
+    "pk": 17,
+    "fields": {
+        "workout": 12,
+        "exercise": 3,
+        "variation": null,
+        "notes": "",
+        "rep_style": "power"
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 1,
+    "fields": {
+        "scheme": 9,
+        "reps": 20,
+        "intensity": 80,
+        "load": 160
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 2,
+    "fields": {
+        "scheme": 9,
+        "reps": 12,
+        "intensity": 80,
+        "load": 160
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 3,
+    "fields": {
+        "scheme": 9,
+        "reps": 8,
+        "intensity": 80,
+        "load": 160
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 4,
+    "fields": {
+        "scheme": 10,
+        "reps": 1,
+        "intensity": 2,
+        "load": 2
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 5,
+    "fields": {
+        "scheme": 10,
+        "reps": 2,
+        "intensity": 3,
+        "load": 3
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 6,
+    "fields": {
+        "scheme": 10,
+        "reps": 4,
+        "intensity": 4,
+        "load": 4
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 7,
+    "fields": {
+        "scheme": 10,
+        "reps": 1,
+        "intensity": 2,
+        "load": 2
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 8,
+    "fields": {
+        "scheme": 10,
+        "reps": 2,
+        "intensity": 3,
+        "load": 3
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 9,
+    "fields": {
+        "scheme": 10,
+        "reps": 4,
+        "intensity": 4,
+        "load": 4
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 10,
+    "fields": {
+        "scheme": 11,
+        "reps": 5,
+        "intensity": 4,
+        "load": 5
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 11,
+    "fields": {
+        "scheme": 11,
+        "reps": 8,
+        "intensity": 6,
+        "load": 8
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 12,
+    "fields": {
+        "scheme": 11,
+        "reps": 9,
+        "intensity": 7,
+        "load": 8
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 13,
+    "fields": {
+        "scheme": 14,
+        "reps": 789,
+        "intensity": 2,
+        "load": 567
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 14,
+    "fields": {
+        "scheme": 14,
+        "reps": 678,
+        "intensity": 3,
+        "load": 456
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 15,
+    "fields": {
+        "scheme": 14,
+        "reps": 456,
+        "intensity": 50,
+        "load": 345
+    }
+},
+{
+    "model": "fitness.resistanceset",
+    "pk": 16,
+    "fields": {
+        "scheme": 1,
+        "reps": 20,
+        "intensity": 80,
+        "load": 200
+    }
+},
+{
+    "model": "fitness.cardioscheme",
+    "pk": 1,
+    "fields": {
+        "variation": null,
+        "notes": "",
+        "workout": 14,
+        "exercise": 5
+    }
+},
+{
+    "model": "fitness.cardioscheme",
+    "pk": 2,
+    "fields": {
+        "variation": null,
+        "notes": "",
+        "workout": 15,
+        "exercise": 3
+    }
+},
+{
+    "model": "fitness.cardioscheme",
+    "pk": 3,
+    "fields": {
+        "variation": null,
+        "notes": "",
+        "workout": 15,
+        "exercise": 1
+    }
+},
+{
+    "model": "fitness.cardioscheme",
+    "pk": 4,
+    "fields": {
+        "variation": null,
+        "notes": "",
+        "workout": 16,
+        "exercise": 5
+    }
+},
+{
+    "model": "fitness.cardioscheme",
+    "pk": 5,
+    "fields": {
+        "variation": null,
+        "notes": null,
+        "workout": 1,
+        "exercise": 1
+    }
+},
+{
+    "model": "fitness.cardioscheme",
+    "pk": 6,
+    "fields": {
+        "variation": null,
+        "notes": null,
+        "workout": 1,
+        "exercise": 2
+    }
+},
+{
+    "model": "fitness.cardioscheme",
+    "pk": 7,
+    "fields": {
+        "variation": null,
+        "notes": null,
+        "workout": 1,
+        "exercise": 3
+    }
+},
+{
+    "model": "fitness.cardiodistance",
+    "pk": 1,
+    "fields": {
+        "scheme": 6,
+        "start": "12:00:00",
+        "stop": "12:20:00",
+        "distance": 2.0,
+        "measurement": "miles"
+    }
+},
+{
+    "model": "fitness.cardiointerval",
+    "pk": 1,
+    "fields": {
+        "scheme": 1,
+        "action_start": "12:00:00",
+        "action_stop": "12:01:00",
+        "rest_start": null,
+        "rest_stop": null
+    }
+},
+{
+    "model": "fitness.cardiointerval",
+    "pk": 2,
+    "fields": {
+        "scheme": 4,
+        "action_start": null,
+        "action_stop": null,
+        "rest_start": null,
+        "rest_stop": null
+    }
+},
+{
+    "model": "fitness.cardiointerval",
+    "pk": 3,
+    "fields": {
+        "scheme": 4,
+        "action_start": null,
+        "action_stop": null,
+        "rest_start": null,
+        "rest_stop": null
+    }
+},
+{
+    "model": "fitness.cardiointerval",
+    "pk": 4,
+    "fields": {
+        "scheme": 4,
+        "action_start": null,
+        "action_stop": null,
+        "rest_start": null,
+        "rest_stop": null
+    }
+},
+{
+    "model": "fitness.cardiointerval",
+    "pk": 5,
+    "fields": {
+        "scheme": 5,
+        "action_start": "12:00:00",
+        "action_stop": "12:10:00",
+        "rest_start": "12:11:00",
+        "rest_stop": "12:13:00"
+    }
+},
+{
+    "model": "fitness.cardiorepetition",
+    "pk": 1,
+    "fields": {
+        "scheme": 7,
+        "quantity": 30,
+        "start": "12:00:00",
+        "stop": "12:05:00"
+    }
+}
+]

@@ -4,6 +4,8 @@
 
   <h1>Your workout on {{ workout.date }}</h1>
 
+
+  {% if workout.resistance_scheme.count %}<h2>Resistance</h2>{% endif %}
   <ul>
     {% for resistance_scheme in workout.resistance_scheme.all %}
       <li>
@@ -19,6 +21,33 @@
       </li>
     {% endfor %}
   </ul>
+
+
+  <h2>Cardio</h2>
+  <ul>
+    {% for cardio_scheme in workout.cardio_scheme.all %}
+      <li>
+        You did {{ cardio_scheme.exercise.title }}
+        <ul>
+          {# Interval #}
+          {% for interval in cardio_scheme.interval_set.all %}
+            <li>for {{ interval.action_time_seconds }} seconds with {{ interval.rest_time_seconds }} of seconds rest</li>
+          {% endfor %}
+
+          {# Distance #}
+          {% for distance in cardio_scheme.distance_set.all %}
+            <li>for {{ distance.distance }} {{ distance.measurement }} in {{ distance.time_seconds }} seconds</li>
+          {% endfor %}
+
+          {# Repetition #}
+          {% for repetition in cardio_scheme.repetition_set.all %}
+            <li>for {{ repetition.quantity }} times in {{ repetition.time_seconds }} of seconds</li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+
 
   <br><br><br>
   <a href="{% url 'new_resistance_scheme' workout.id %}">Add Resistance Scheme</a>

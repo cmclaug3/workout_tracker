@@ -43,7 +43,6 @@ class Exercise(models.Model):
     body_part = models.CharField(max_length=50, choices=BODY_PART_CHOICES)
     modality = models.CharField(max_length=50, help_text='Method of exercise',
                                 choices=MODALITY_CHOICES)
-    # TODO: add field for exercise type
 
     def __str__(self):
         return self.title
@@ -62,7 +61,6 @@ class Workout(models.Model):
 
 
 class WorkoutScheme(models.Model):
-    exercise = models.ForeignKey(Exercise)
     variation = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
 
@@ -106,6 +104,7 @@ class ResistanceSet(models.Model):
 
 class CardioScheme(WorkoutScheme):
     workout = models.ForeignKey(Workout, related_name='cardio_scheme')
+    exercise = models.ForeignKey(Exercise)  # TODO: update to point to CardioExercise
 
 
 class CardioDistance(models.Model):
@@ -116,6 +115,17 @@ class CardioDistance(models.Model):
     # TODO: add choices for measurement field
     measurement = models.CharField(max_length=200)
 
+    @property
+    def time_seconds(self):
+        if self.start and self.stop:
+            time_delta = datetime.combine(datetime.today(), self.stop) - \
+                         datetime.combine(datetime.today(), self.start)
+            return time_delta.seconds
+        return 0
+
+
+# obj = CardioInterval.objects.first()
+# obj.action_time_seconds  # calling as a property
 
 class CardioInterval(models.Model):
     scheme = models.ForeignKey(CardioScheme, related_name='interval_set')
@@ -124,14 +134,30 @@ class CardioInterval(models.Model):
     rest_start = models.TimeField(blank=True, null=True)
     rest_stop = models.TimeField(blank=True, null=True)
 
+    @property
+    def action_time_seconds(self):
+        if self.action_start and self.action_stop:
+            action_time_delta = datetime.combine(datetime.today(), self.action_stop) - \
+                                datetime.combine(datetime.today(), self.action_start)
+            return action_time_delta.seconds
+        return 0
+
+    @property
+    def rest_time_seconds(self):
+        if self.rest_start and self.rest_stop:
+            rest_time_delta = datetime.combine(datetime.today(), self.rest_stop) - \
+                              datetime.combine(datetime.today(), self.rest_start)
+            return rest_time_delta.seconds
+        return 0
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         my_dict = {'a': 'aa', 'b': 'bb', }
         # dict.get('VAR_NAME', 'DEFAULT_VALUE')
         my_dict.get('c', 'there is no c')
         # getattr(INSTANCE, 'VAR_NAME', DEFAULT_VALUE)
-        if getattr(self, 'action_time', False):
-            import ipdb
-            ipdb.set_trace()
+        # if getattr(self, 'action_time', False):
+            # import ipdb
+            # ipdb.set_trace()
         super(CardioInterval, self).save(force_insert, force_update, using, update_fields)
 
 
@@ -140,3 +166,11 @@ class CardioRepetition(models.Model):
     quantity = models.IntegerField()
     start = models.TimeField(blank=True, null=True)
     stop = models.TimeField(blank=True, null=True)
+
+    @property
+    def time_seconds(self):
+        if self.start and self.stop:
+            time_delta = datetime.combine(datetime.today(), self.stop) - \
+                         datetime.combine(datetime.today(), self.start)
+            return time_delta.seconds
+        return 0
