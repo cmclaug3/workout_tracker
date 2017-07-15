@@ -125,6 +125,10 @@ class CardioInterval(models.Model):
     rest_stop = models.TimeField(blank=True, null=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        my_dict = {'a': 'aa', 'b': 'bb', }
+        # dict.get('VAR_NAME', 'DEFAULT_VALUE')
+        my_dict.get('c', 'there is no c')
+        # getattr(INSTANCE, 'VAR_NAME', DEFAULT_VALUE)
         if getattr(self, 'action_time', False):
             import ipdb
             ipdb.set_trace()
