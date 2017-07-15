@@ -45,16 +45,15 @@ CARDIO_MODALITY_CHOICES = (
 class Exercise(models.Model):
     title = models.CharField(max_length=200)
     body_part = models.CharField(max_length=50, choices=BODY_PART_CHOICES)
-    modality = models.CharField(max_length=50, help_text='Method of exercise',
-                                choices=MODALITY_CHOICES)
-
+   
     def __str__(self):
         return self.title
 
 class CardioExercise(models.Model):
     title = models.CharField(max_length=200)
-    modality = models.CharField(max_length=50, help_text='Method of cardio',
-                                choices=CARDIO_MODALITY_CHOICES)
+
+    def __str__(self):
+        return self.title
 
 
 class Workout(models.Model):
@@ -83,6 +82,8 @@ class ResistanceScheme(models.Model):
     variation = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
     rep_style = models.CharField(max_length=20, blank=True, null=True, choices=REP_STYLE_CHOICES)
+    modality = models.CharField(max_length=50, blank=True, null=True, help_text='Method of exercise',
+                                choices=MODALITY_CHOICES)
 
     def __str__(self):
         return '{} - {}'.format(datetime.strftime(self.workout.date, '%m-%d-%Y'),
@@ -117,6 +118,8 @@ class ResistanceSet(models.Model):
 class CardioScheme(WorkoutScheme):
     workout = models.ForeignKey(Workout, related_name='cardio_scheme')
     exercise = models.ForeignKey(CardioExercise)
+    modality = models.CharField(max_length=50, blank=True, null=True, help_text='Method of cardio',
+                                choices=CARDIO_MODALITY_CHOICES)
 
     def __str__(self):
         return '{} - {}'.format(datetime.strftime(self.workout.date, '%m-%d-%Y'),

@@ -3,10 +3,11 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from fitness.models import Exercise, Workout, ResistanceScheme, ResistanceSet, CardioScheme, CardioDistance, CardioRepetition, CardioInterval
+from fitness.models import Exercise, CardioExercise, Workout, ResistanceScheme, ResistanceSet, CardioScheme, CardioDistance, CardioRepetition, CardioInterval
 
 
 admin.site.register(Exercise)
+admin.site.register(CardioExercise)
 
 admin.site.register(CardioScheme)
 admin.site.register(CardioInterval)

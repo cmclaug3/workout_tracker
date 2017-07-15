@@ -44,11 +44,12 @@ def exercise(request):
 def resistance_exercise_form(request):
     if not request.user.is_authenticated:
         return redirect(reverse('acount_login'))
-    form = ExerciseForm(request.POST)
-    if form.is_valid:
-        form.save()
-    else:
-        form = ExerciseForm()
+    if request.method == 'POST':
+        form = ExerciseForm(request.POST)
+        if form.is_valid:
+            form.save()
+        else:
+            form = ExerciseForm()
     context = {
         'form':form,
     }
