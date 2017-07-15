@@ -7,7 +7,7 @@ from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views import View
 
-from fitness.forms import CardioIntervalForm, CardioSchemeForm, ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
+from fitness.forms import CardioDistanceForm, CardioRepetitionForm, CardioIntervalForm, CardioSchemeForm, ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
 from fitness.models import CardioScheme, ResistanceScheme, Workout
 
 
@@ -185,10 +185,10 @@ def new_cardio_scheme(request, workout_id):
             scheme = form.save()
             if request.POST.get('cardio_interval'):
                 return redirect(reverse('new_cardio_interval', kwargs={'scheme_id': scheme.id}))
-            # elif request.POST.get('cardio_repetition'):
-            #     return redirect(reverse('new_cardio_repetition', kwargs={'scheme_id': scheme.id}))
-            # elif request.POST.get('cardio_distance'):
-            #     return redirect(reverse('new_cardio_distance', kwargs={'scheme_id': scheme.id}))
+            elif request.POST.get('cardio_repetition'):
+                return redirect(reverse('new_cardio_repetition', kwargs={'scheme_id': scheme.id}))
+            elif request.POST.get('cardio_distance'):
+                return redirect(reverse('new_cardio_distance', kwargs={'scheme_id': scheme.id}))
             else:
                 messages.success(request, 'New Cardio Scheme Saved')
                 return redirect(reverse('single_workout', kwargs={'workout_id': workout_id}))
@@ -233,3 +233,39 @@ def new_cardio_interval(request, scheme_id):
         'form': form,
     }
     return render(request, 'fitness/new_cardio_interval.html', context)
+
+
+def new_cardio_repetition(request, scheme_id):
+    scheme = CardioScheme.objects.get(workout__user=request.user, id=scheme_id)
+    form = CardioRepetitionForm(initial={'scheme': scheme})
+    if request.method == 'POST':
+        form = CardioRepetitionForm(request.POST, initial={'scheme': scheme})
+        if form.is_valid():
+            form.save()
+            # TODO: do something with user from here
+            messages.success(request, 'You saved it')
+    context = {
+        'form': form,
+    }
+    return render(request, 'fitness/new_cardio_repetition.html', context)
+
+
+def new_cardio_distance(request, scheme_id):
+    scheme = CardioScheme.objects.get(workout__user=request.user, id=scheme_id)
+    form = CardioDistanceForm(initial={'scheme': scheme})
+    if request.method == 'POST':
+        form = CardioDistanceForm(request.POST, initial={'scheme': scheme})
+        if form.is_valid():
+            form.save()
+            # TODO: do something with user from here
+            messages.success(request, 'You saved it')
+    context = {
+        'form': form,
+    }
+    return render(request, 'fitness/new_cardio_distance.html', context)
+
+
+
+
+
+    
