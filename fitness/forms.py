@@ -59,7 +59,7 @@ class CardioIntervalForm(forms.ModelForm):
         model = CardioInterval
         fields = (
             'scheme', 'action_start', 'action_stop', 'rest_start',
-            'rest_stop'
+            'rest_stop', 'quantity',
         )
 
 

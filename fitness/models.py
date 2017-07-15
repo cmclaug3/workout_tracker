@@ -155,6 +155,7 @@ class CardioInterval(models.Model):
     action_stop = models.TimeField(blank=True, null=True)
     rest_start = models.TimeField(blank=True, null=True)
     rest_stop = models.TimeField(blank=True, null=True)
+    quantity = models.IntegerField(default=1)
 
     @property
     def action_time_seconds(self):
@@ -183,7 +184,7 @@ class CardioInterval(models.Model):
         super(CardioInterval, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
-        return 'action: {}, rest: {}'.format(self.action_time_seconds, self, rest_time_seconds)
+        return 'action: {}, rest: {}, units: {}'.format(self.action_time_seconds, self, rest_time_seconds, self.quantity)
 
 
 class CardioRepetition(models.Model):
@@ -201,4 +202,4 @@ class CardioRepetition(models.Model):
         return 0
 
     def __str__(self):
-        return self.quantity
+        return '{} in {}'.format(self.quantity, self.time_seconds)
