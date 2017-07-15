@@ -37,6 +37,10 @@ MODALITY_CHOICES = (
     ('body-weight', 'Body Weight'),
 )
 
+CARDIO_MODALITY_CHOICES = (
+
+)
+
 
 class Exercise(models.Model):
     title = models.CharField(max_length=200)
@@ -46,6 +50,11 @@ class Exercise(models.Model):
 
     def __str__(self):
         return self.title
+
+class CardioExercise(models.Model):
+    title = models.CharField(max_length=200)
+    modality = models.CharField(max_length=50, help_text='Method of cardio',
+                                choices=CARDIO_MODALITY_CHOICES)
 
 
 class Workout(models.Model):
@@ -101,10 +110,17 @@ class ResistanceSet(models.Model):
         if self.reps > 12:
             return 'Endurance'
 
+    def __str__(self):
+        return '{}@{}lbs'.format(self.reps, self.load)
+
 
 class CardioScheme(WorkoutScheme):
     workout = models.ForeignKey(Workout, related_name='cardio_scheme')
-    exercise = models.ForeignKey(Exercise)  # TODO: update to point to CardioExercise
+    exercise = models.ForeignKey(CardioExercise)
+
+    def __str__(self):
+        return '{} - {}'.format(datetime.strftime(self.workout.date, '%m-%d-%Y'),
+                                self.exercise)
 
 
 class CardioDistance(models.Model):
@@ -122,6 +138,9 @@ class CardioDistance(models.Model):
                          datetime.combine(datetime.today(), self.start)
             return time_delta.seconds
         return 0
+
+    def __str__(self):
+        return '{} in {} seconds'.format(self.time_seconds, self.distance) # maybe needs to change
 
 
 # obj = CardioInterval.objects.first()
@@ -160,6 +179,9 @@ class CardioInterval(models.Model):
             # ipdb.set_trace()
         super(CardioInterval, self).save(force_insert, force_update, using, update_fields)
 
+    def __str__(self):
+        return 'action: {}, rest: {}'.format(self.action_time_seconds, self, rest_time_seconds)
+
 
 class CardioRepetition(models.Model):
     scheme = models.ForeignKey(CardioScheme, related_name='repetition_set')
@@ -174,3 +196,6 @@ class CardioRepetition(models.Model):
                          datetime.combine(datetime.today(), self.start)
             return time_delta.seconds
         return 0
+
+    def __str__(self):
+        return self.quantity

@@ -1,6 +1,6 @@
 from django import forms
 
-from fitness.models import (Exercise, Workout, ResistanceScheme, ResistanceSet,
+from fitness.models import (Exercise, CardioExercise, Workout, ResistanceScheme, ResistanceSet,
                             CardioScheme, CardioDistance, CardioInterval, CardioRepetition)
 
 
@@ -8,6 +8,11 @@ class ExerciseForm(forms.ModelForm):
     class Meta:
         model = Exercise
         fields = ('title', 'body_part', 'modality')
+
+class CardioExerciseForm(forms.ModelForm):
+    class Meta:
+        model = CardioExercise
+        fields = ('title', 'modality')
 
 
 class WorkoutForm(forms.ModelForm):
