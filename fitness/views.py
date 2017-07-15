@@ -227,8 +227,16 @@ def new_cardio_interval(request, scheme_id):
         form = CardioIntervalForm(request.POST, initial={'scheme': scheme})
         if form.is_valid():
             form.save()
-            # TODO: do something with user from here
             messages.success(request, 'You saved it')
+            if request.POST.get('add_another'):
+                url = reverse('new_cardio_interval', kwargs={'scheme_id': scheme.id})
+            elif request.POST.get('add_scheme'):
+                url = reverse('new_cardio_scheme', kwargs={'workout_id': scheme.workout.id})
+            elif request.POST.get('add_resistance'):
+                url = reverse('new_resistance_scheme', kwargs={'workout_id': scheme.workout.id})
+            else:
+                url = reverse('single_workout', kwargs={'workout_id': scheme.workout.id})
+            return redirect(url)
     context = {
         'form': form,
     }

@@ -6,7 +6,15 @@
     {{ form.as_p }}
       <br>
 
-    <input type="submit" value="Save"/>
+      <h4>Save and</h4>
+    <input type="submit" name="add_another" value="Add another Interval"/>
+      <br><br><br>
+    <input type="submit" name="add_scheme" value="Add Cardio Scheme"/>
+      <br><br><br>
+    <input type="submit" name="add_resistance" value="Add Resistance Scheme"/>
+      <br><br><br>
+    <input type="submit" value="Review Workout"/>
+      <br><br><br>
     {% csrf_token %}
   </form>
 
