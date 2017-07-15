@@ -62,5 +62,5 @@ class CardioRepetitionForm(forms.ModelForm):
     class Meta:
         model = CardioRepetition
         fields = (
-            'scheme', 'quantity', 'start', 'stop'
+            'scheme', 'quantity', 'start', 'stop',
         )

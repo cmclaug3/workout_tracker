@@ -235,6 +235,20 @@ def new_cardio_interval(request, scheme_id):
     return render(request, 'fitness/new_cardio_interval.html', context)
 
 
+def new_cardio_repetition(request, scheme_id):
+    scheme = CardioScheme.objects.get(workout__user=request.user, id=scheme_id)
+    form = CardioRepetitionForm(initial={'scheme': scheme})
+    if request.method == 'POST':
+        form = CardioRepetitionForm(request.POST, initial={'scheme': scheme})
+        if form.is_valid():
+            form.save()
+            # TODO: do something with user from here
+            messages.success(request, 'You saved it')
+    context = {
+        'form': form,
+    }
+    return render(request, 'fitness/new_cardio_repetition.html', context)
+
 
 
 
