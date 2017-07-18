@@ -21,9 +21,12 @@
   		{% endfor %}
   		<hr>
 
-  	<input type="submit" name="add_resistance_exercise" value="Add Resistance Exercise"/>
-  	<br>
-  	<input type="submit" name="add_cardio_exercise" value="Add Cardio Exercise"/>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="submit" name="add_resistance_exercise" value="Add Resistance Exercise"/>
+      <br>
+      <input type="submit" name="add_cardio_exercise" value="Add Cardio Exercise"/>
+    </form>
   </div>
 
 {% endblock content %}

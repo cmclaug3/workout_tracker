@@ -44,30 +44,29 @@ def exercise(request):
 def resistance_exercise_form(request):
     if not request.user.is_authenticated:
         return redirect(reverse('acount_login'))
+    form = ExerciseForm()
     if request.method == 'POST':
         form = ExerciseForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
-        else:
-            form = ExerciseForm()
     context = {
         'form':form,
     }
-    return render(request, 'new_resistance_exercise.html', context)
+    return render(request, 'fitness/new_resistance_exercise.html', context)
     
 
 def cardio_exercise_form(request):
     if not request.user.is_authenticated:
         return redirect(reverse('acount_login'))
-    form = ExerciseCardioForm(request.POST)
-    if form.is_valid:
-        form.save()
-    else:
-        form = CardioExerciseForm()
+    form = CardioExerciseForm()
+    if request.method == 'POST':
+        form = CardioExerciseForm(request.POST)
+        if form.is_valid():
+            form.save()
     context = {
         'form':form,
     }
-    return render(request, 'new_cardio_exercise.html', context)
+    return render(request, 'fitness/new_cardio_exercise.html', context)
 
 def single_workout(request, workout_id):
     if not request.user.is_authenticated:
