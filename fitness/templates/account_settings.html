@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <strong><h2><p align="center">Account Settings</p></h2></strong>
+    {% if user.is_authenticated %}
+        <p align="center">Logged in as {{ user }}.</p>
+    <ul>
+        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+        <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+        <li><a href="{% url 'change_name' %}">Change Name</a></li>
+      {% else %}
+          <li><a href="{% url 'account_login' %}">Sign In</a></li>
+        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+      {% endif %}
+    </ul>
+
+{% endblock %}
