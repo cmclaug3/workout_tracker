@@ -31,6 +31,8 @@ def exercise(request):
         return redirect((reverse('resistance_exercise_form')))
     if request.POST.get('add_cardio_exercise'):
         return redirect((reverse('cardio_exercise_form')))
+    #if request.POST.get('edit_exercises'):
+        #make all the checkboxes pop up
     return render(request, 'fitness/exercises.html', context)
 
 # def add_exercise(request):
