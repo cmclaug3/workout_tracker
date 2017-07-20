@@ -184,7 +184,7 @@ class CardioInterval(models.Model):
         super(CardioInterval, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
-        return 'action: {}, rest: {}, units: {}'.format(self.action_time_seconds, self, rest_time_seconds, self.quantity)
+        return 'action: {}, rest: {}, units: {}'.format(self.action_time_seconds, self.rest_time_seconds, self.quantity)
 
 
 class CardioRepetition(models.Model):

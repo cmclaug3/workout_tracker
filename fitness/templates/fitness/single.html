@@ -31,7 +31,7 @@
         <ul>
           {# Interval #}
           {% for interval in cardio_scheme.interval_set.all %}
-            <li>for {{ interval.action_time_seconds }} seconds with {{ interval.rest_time_seconds }} of seconds rest</li>
+            <li>for {{ interval.action_time_seconds }} seconds with {{ interval.rest_time_seconds }} of seconds rest {{ interval.quantity }} times</li>
           {% endfor %}
 
           {# Distance #}
