@@ -69,3 +69,9 @@ class CardioRepetitionForm(forms.ModelForm):
         fields = (
             'scheme', 'quantity', 'start', 'stop',
         )
+
+
+class CardioRepetionFormTime(forms.Form):
+    scheme = forms.IntegerField(widget=forms.HiddenInput)
+    quantity = forms.IntegerField()
+    time = forms.TimeField()

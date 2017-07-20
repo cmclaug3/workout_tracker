@@ -41,7 +41,7 @@
 
           {# Repetition #}
           {% for repetition in cardio_scheme.repetition_set.all %}
-            <li>for {{ repetition.quantity }} times in {{ repetition.time_seconds }} of seconds</li>
+            <li>for {{ repetition.quantity }} times in {{ repetition.time_human }}</li>
           {% endfor %}
         </ul>
       </li>

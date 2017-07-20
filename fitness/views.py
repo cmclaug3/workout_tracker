@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import datetime
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views import View
 
-from fitness.forms import ExerciseForm, CardioExerciseForm, CardioDistanceForm, CardioRepetitionForm, CardioIntervalForm, CardioSchemeForm, ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
-from fitness.models import CardioScheme, ResistanceScheme, Workout, Exercise, CardioExercise
+from fitness.forms import CardioRepetionFormTime, ExerciseForm, CardioExerciseForm, CardioDistanceForm, CardioRepetitionForm, CardioIntervalForm, CardioSchemeForm, ResistanceSetForm, ResistanceSchemeForm, WorkoutForm
+from fitness.models import CardioRepetition, CardioScheme, ResistanceScheme, Workout, Exercise, CardioExercise
 
 
 def home(request):
@@ -320,18 +322,43 @@ def new_cardio_interval(request, scheme_id):
 
 
 def new_cardio_repetition(request, scheme_id):
+    # wrap scheme =  with try / except CardioScheme.DoesNotExist
     scheme = CardioScheme.objects.get(workout__user=request.user, id=scheme_id)
-    form = CardioRepetitionForm(initial={'scheme': scheme})
+    form = CardioRepetionFormTime(initial={'scheme': scheme.id})
     if request.method == 'POST':
-        form = CardioRepetitionForm(request.POST, initial={'scheme': scheme})
+        form = CardioRepetionFormTime(request.POST, initial={'scheme': scheme})
         if form.is_valid():
-            form.save()
+            scheme = CardioScheme.objects.get(workout__user=request.user, id=form.cleaned_data['scheme'])
+
+            cr = CardioRepetition(scheme=scheme,
+                                  start=datetime.strptime('00:00:00', '%H:%M:%S').time(),
+                                  stop=form.cleaned_data['time'],
+                                  quantity=form.cleaned_data['quantity'])
+            cr.save()
+
+            # left from previous example when using forms.ModelForm
+            # cr = form.save()
             # TODO: do something with user from here
             messages.success(request, 'You saved it')
     context = {
         'form': form,
     }
     return render(request, 'fitness/new_cardio_repetition.html', context)
+
+
+# def new_cardio_repetition(request, scheme_id):
+#     scheme = CardioScheme.objects.get(workout__user=request.user, id=scheme_id)
+#     form = CardioRepetitionForm(initial={'scheme': scheme})
+#     if request.method == 'POST':
+#         form = CardioRepetitionForm(request.POST, initial={'scheme': scheme})
+#         if form.is_valid():
+#             form.save()
+#             # TODO: do something with user from here
+#             messages.success(request, 'You saved it')
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'fitness/new_cardio_repetition.html', context)
 
 
 def new_cardio_distance(request, scheme_id):

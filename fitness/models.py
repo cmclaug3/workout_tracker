@@ -194,12 +194,39 @@ class CardioRepetition(models.Model):
     stop = models.TimeField(blank=True, null=True)
 
     @property
+    def total_time(self):
+        time_delta = datetime.combine(datetime.today(), self.stop) - \
+                     datetime.combine(datetime.today(), self.start)
+        return (datetime.min + time_delta).time()
+
+    @property
     def time_seconds(self):
-        if self.start and self.stop:
+        if self.start is not None and self.stop is not None:
             time_delta = datetime.combine(datetime.today(), self.stop) - \
                          datetime.combine(datetime.today(), self.start)
             return time_delta.seconds
         return 0
+
+    @property
+    def time_human(self):
+        if self.start is not None and self.stop is not None:
+            total_time = self.total_time
+            return_str = ''
+            if total_time.hour:
+                return_str += '{} hour'.format(total_time.hour)
+                if total_time.hour > 1:
+                    return_str += 's'
+            if total_time.minute:
+                return_str += ' {} minute'.format(total_time.minute)
+                if total_time.minute > 1:
+                    return_str += 's'
+            if total_time.second:
+                return_str += ' {} second'.format(total_time.second)
+                if total_time.second > 1:
+                    return_str += 's'
+            return return_str
+
+        return '0 seconds'
 
     def __str__(self):
         return '{} in {}'.format(self.quantity, self.time_seconds)
