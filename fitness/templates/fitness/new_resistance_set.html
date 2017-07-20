@@ -9,6 +9,11 @@
       <br>
     {% endfor %}
 
+      {% if all_same %}
+        <input type="hidden" name="all_same" value="True"/>
+        <input type="hidden" name="num_sets" value="{{ num_sets }}"/>
+      {% endif %}
+
     <input type="submit" value="Save and add Scheme"/>
       <br><br>
     <input type="submit" name="add_another" value="Save and Add Another"/>

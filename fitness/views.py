@@ -21,10 +21,6 @@ def home(request):
     return render(request, 'home.html', context)
 
 def exercise(request):
-    # if request.method == 'POST':
-    #     import ipdb
-    #     ipdb.set_trace()
-
     if not request.user.is_authenticated:
         return redirect(reverse('acount_login'))
     context = {
@@ -32,6 +28,7 @@ def exercise(request):
         'cardio_exercises': CardioExercise.objects.all(),
     }
 
+    # inject extra context variable if in `edit` mode to delete exercises
     if request.GET.get('edit'):
         context['edit'] = True
 
@@ -39,8 +36,6 @@ def exercise(request):
         return redirect((reverse('resistance_exercise_form')))
     if request.POST.get('add_cardio_exercise'):
         return redirect((reverse('cardio_exercise_form')))
-    #if request.POST.get('edit_exercises'):
-        #make all the checkboxes pop up
     return render(request, 'fitness/exercises.html', context)
 
 # def add_exercise(request):
@@ -164,9 +159,12 @@ class ResistanceSchemeView(View):
             num_sets = request.POST.get('num_sets')
             try:
                 num_sets = int(num_sets)
-                return redirect('{}?num_sets={}'.format(
+                url = '{}?num_sets={}'.format(
                     reverse('new_resistance_set', kwargs={'scheme_id': scheme.id}),
-                    num_sets))
+                    num_sets)
+                if request.POST.get('all_same'):
+                    url += '&all_same=True'
+                return redirect(url)
             except TypeError:
                 pass
 
@@ -181,9 +179,11 @@ class ResistanceSetView(View):
             return redirect(reverse('account_login'))
 
         num_sets = request.GET.get('num_sets', 0)
+        all_same = False
         if num_sets:
             try:
                 num_sets = int(num_sets)
+                all_same = request.GET.get('all_same')
                 self.form_set = formset_factory(ResistanceSetForm, extra=0)
             except TypeError:
                 pass
@@ -194,11 +194,16 @@ class ResistanceSetView(View):
             messages.add_message(request, messages.ERROR, 'No ResistanceScheme with id {}.'.format(scheme_id))
             return redirect(reverse('home'))
         initial_data = []
-        for form in range(0, num_sets):
+        if all_same:
             initial_data.append({'scheme': scheme})
+        else:
+            for form in range(0, num_sets):
+                initial_data.append({'scheme': scheme})
         context = {
             # 'form_set': form_set(),
             'form_set': self.form_set(initial=initial_data),
+            'all_same': all_same,
+            'num_sets': num_sets,
         }
         return render(request, 'fitness/new_resistance_set.html', context)
 
@@ -220,6 +225,14 @@ class ResistanceSetView(View):
             return render(request, 'fitness/new_resistance_set.html', context)
         for form in form_set.forms:
             workout_set = form.save()
+
+        if request.POST.get('all_same'):
+            num_sets = request.POST.get('num_sets')
+            # TODO: wrap num_sets conversion with try / except
+            num_sets = int(num_sets)
+            for n in range(0, num_sets - 1):
+                workout_set.id = None
+                workout_set.save()
 
         if request.POST.get('add_another'):
             # return self.get(request, workout_id)
