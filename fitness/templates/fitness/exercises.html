@@ -8,25 +8,31 @@
 
   <hr>
   <div>
-
-
     <form method="POST">
       <h3>Resistance Exercises</h3>
       {% for exercise in resistance_exercises  %}
-      <input type="checkbox" name="delete_exercise" value="delete?">{{ exercise.title }}<br>
+      {% if edit %}<input type="checkbox" name="delete_exercise" value="{{ exercise.id }}">{% endif %}
+        {{ exercise.title }}<br>
       {% endfor %}
 
       <hr>
     <h3>Cardio Exercises</h3>
       {% for exercise in cardio_exercises %}
-      <input type="checkbox" name="delete_exercise" value="delete?">{{ exercise.title }}<br>
+      {% if edit %}<input type="checkbox" name="delete_cardio_exercise" value="{{ exercise.id }}">{% endif %}
+        {{ exercise.title }}<br>
       {% endfor %}
       {% csrf_token %}
       <input type="submit" name="add_resistance_exercise" value="Add Resistance Exercise"/>
       <br>
       <input type="submit" name="add_cardio_exercise" value="Add Cardio Exercise"/>
       <br>
-      <input type="submit" name="delete_exercise" value="Delete Selected Exercises"/>
+      <br>
+
+      {% if edit %}<input type="submit" name="delete_exercise" value="Delete Selected Exercises"/>
+        <br><a href="{% url 'exercise' %}">Cancel</a>
+      {% else %}
+        <a href="{% url 'exercise' %}?edit=True">Modify Exercises</a>
+      {% endif %}
     </form>
   </div>
 

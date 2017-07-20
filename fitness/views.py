@@ -21,12 +21,20 @@ def home(request):
     return render(request, 'home.html', context)
 
 def exercise(request):
+    # if request.method == 'POST':
+    #     import ipdb
+    #     ipdb.set_trace()
+
     if not request.user.is_authenticated:
         return redirect(reverse('acount_login'))
     context = {
         'resistance_exercises': Exercise.objects.all(),
         'cardio_exercises': CardioExercise.objects.all(),
     }
+
+    if request.GET.get('edit'):
+        context['edit'] = True
+
     if request.POST.get('add_resistance_exercise'):
         return redirect((reverse('resistance_exercise_form')))
     if request.POST.get('add_cardio_exercise'):
@@ -172,11 +180,11 @@ class ResistanceSetView(View):
         if not request.user.is_authenticated:
             return redirect(reverse('account_login'))
 
-        num_sets = request.GET.get('num_sets', False)
+        num_sets = request.GET.get('num_sets', 0)
         if num_sets:
             try:
                 num_sets = int(num_sets)
-                self.form_set = formset_factory(ResistanceSetForm, extra=num_sets-1)
+                self.form_set = formset_factory(ResistanceSetForm, extra=0)
             except TypeError:
                 pass
 
@@ -185,9 +193,12 @@ class ResistanceSetView(View):
         except ResistanceScheme.DoesNotExist:
             messages.add_message(request, messages.ERROR, 'No ResistanceScheme with id {}.'.format(scheme_id))
             return redirect(reverse('home'))
+        initial_data = []
+        for form in range(0, num_sets):
+            initial_data.append({'scheme': scheme})
         context = {
             # 'form_set': form_set(),
-            'form_set': self.form_set(initial=[{'scheme': scheme}, ]),
+            'form_set': self.form_set(initial=initial_data),
         }
         return render(request, 'fitness/new_resistance_set.html', context)
 
@@ -289,6 +300,9 @@ def new_cardio_interval(request, scheme_id):
     context = {
         'form': form,
     }
+
+    # import ipdb
+    # ipdb.set_trace()
     return render(request, 'fitness/new_cardio_interval.html', context)
 
 
