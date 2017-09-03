@@ -5,11 +5,12 @@
   <h1>Workout on {{ workout.date }}</h1>
 
 
-  {% if workout.resistance_scheme %}<h2>Resistance</h2>{% endif %}
 
-  
+<!-- RESISTANCE -->
 
-          <br>
+    <!-- NEED TO GET THIS ONLY APPEAR IF IT EXISTS -->
+    {% if workout.resistance_scheme %}<h2>Resistance</h2>
+
       <table border="1">
           <tr>
             <th>EXERCISE</th>
@@ -17,57 +18,120 @@
             <th>WORK</th>
             <th>INTENSITY</th>
           </tr>
+
+          {% endif %}
+          <!-- END HERE -->
+
     {% for resistance_scheme in workout.resistance_scheme.all %}
     {% for resistance_set in resistance_scheme.resistance_set.all %}
 
           <tr>
-          {% if forloop.first %}
-            <td>{{ resistance_scheme.exercise.title }} </td>
-          {% else %}
-            <td></td>
-          {% endif %}
-            <td>{{ resistance_set.reps }} X {{ resistance_set.load }} </td>
-            <td>{{ resistance_set.work }} </td>
-            <td>{{ resistance_set.intensity }} </td>
-          </tr>
+            {% if forloop.first %}
+              <td>{{ resistance_scheme.exercise.title }} </td>
+            {% else %}
+              <td></td>
+            {% endif %}
+              <td>{{ resistance_set.reps }} @ {% if resistance_set.load == 0 %}BW{% endif %}{{ resistance_set.load }} </td>
+              <td>{{ resistance_set.work }} </td>
+              <td>{{ resistance_set.intensity }} </td>
+            </tr>
 
-          {% endfor %}
-          
-          {% endfor %}
+    {% endfor %}
+    {% endfor %}
           </table>
     
 
 
 
-  {% if workout.cardio_scheme %}<h2>Cardio</h2>{% endif %}
-  <ul>
-    {% for cardio_scheme in workout.cardio_scheme.all %}
-      <li>
-        You did {{ cardio_scheme.exercise.title }}
-        <ul>
-          {# Interval #}
-          {% for interval in cardio_scheme.interval_set.all %}
-            <li>for {{ interval.action_time_seconds }} seconds with {{ interval.rest_time_seconds }} of seconds rest {{ interval.quantity }} times</li>
-          {% endfor %}
 
-          {# Distance #}
-          {% for distance in cardio_scheme.distance_set.all %}
-            <li>for {{ distance.distance }} {{ distance.measurement }} in {{ distance.time_seconds }} seconds</li>
-          {% endfor %}
-
-          {# Repetition #}
-          {% for repetition in cardio_scheme.repetition_set.all %}
-            <li>for {{ repetition.quantity }} times in {{ repetition.time_human }}</li>
-          {% endfor %}
-        </ul>
-      </li>
-    {% endfor %}
-  </ul>
+<!-- CARDIO -->
 
 
-  <br><br><br>
-  <a href="{% url 'new_resistance_scheme' workout.id %}">Add Resistance Scheme</a>
+<!-- NEED TO GET THIS ONLY APPEAR IF IT EXISTS -->
+{% if workout.cardio_scheme %} <h2>Cardio</h2> {% endif %}
+<!-- END HERE -->
+
+  {% for cardio_scheme in workout.cardio_scheme.all %}
+
+
+    {% for interval in cardio_scheme.interval_set.all %}
+
+    {# Interval #}
+
+      <caption>Interval</caption>
+      <table border="1">
+        <tr>
+          <th>EXERCISE</th>
+          <th>ACTION</th>
+          <th>RECOVERY</th>
+          <th>QUANTITY</th>
+        </tr>
+        <tr>
+          <td>{{ cardio_scheme.exercise.title }}</td>
+          <td>{{ interval.action_time_seconds }}</td>
+          <td>{{ interval.rest_time_seconds }}</td>
+          <td>{{ interval.quantity }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <br>
+
+    {% for distance in cardio_scheme.distance_set.all %}
+
+    {# Distance #}
+  
+      <caption>Distance</caption>
+        <table border="1">
+          <tr>
+            <th>EXERCISE</th>
+            <th>DISTANCE</th>
+            <th>MEASUREMENT</th>
+            <th>TIME</th>
+          </tr>
+          <tr>
+            <td>{{ cardio_scheme.exercise.title }}</td>
+            <td>{{ distance.distance }}</td>
+            <td>{{ distance.measurement }}</td>
+            <td>{{ distance.time_seconds }}</td>
+          </tr>
+
+        {% endfor %}
+      </table>
+
+      <br>
+
+
+
+
+
+  
+
+{% for repetition in cardio_scheme.repetition_set.all %}
+
+{# Repetition #}
+<caption>Repetition</caption>
+<table border="1">
+        <tr>
+          <th>EXERCISE</th>
+          <th>REPETITIONS</th>
+          <th>TIMES</th>
+        </tr>
+        <tr>
+          <td>{{ cardio_scheme.exercise.title }}</td>
+          <td>{{ repetition.quantity }}</td>
+          <td>{{ repetition.time_human }}</td>
+        </tr>
+
+  {% endfor %}
+  </table>
+  {% endfor %}
+
+
+
   <br><br>
+  <a href="{% url 'new_resistance_scheme' workout.id %}">Add Resistance Scheme</a> | 
+  
   <a href="{% url 'new_cardio_scheme' workout.id %}">Add Cardio Scheme</a>
 
 {% endblock content %}

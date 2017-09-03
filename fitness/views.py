@@ -34,13 +34,26 @@ def exercise(request):
     if not request.user.is_authenticated:
         return redirect(reverse('acount_login'))
     context = {
-        'resistance_exercises': Exercise.objects.all(),
-        'cardio_exercises': CardioExercise.objects.all(),
+        'resistance_exercises': Exercise.objects.all().order_by('title'),
+        'cardio_exercises': CardioExercise.objects.all().order_by('title'),
     }
 
     # inject extra context variable if in `edit` mode to delete exercises
     if request.GET.get('edit'):
         context['edit'] = True
+
+    # # attempt at deleting exercise from edit
+    # if request.POST.get('delete_exercise'):
+    #     exercises_to_delete = request.POST.getlist('exercise_id')
+    #     for ident in exercises_to_delete:
+    #         to_go = Exercise.objects.get(id=ident)
+    #         to_go.delete()
+    #     return render(request, 'fitness/exercises.html', context)
+
+
+
+        # exercises_to_delete = ?
+        # exercises_to_delete.delete()
 
     if request.POST.get('add_resistance_exercise'):
         return redirect((reverse('resistance_exercise_form')))
@@ -82,6 +95,7 @@ def cardio_exercise_form(request):
         'form':form,
     }
     return render(request, 'fitness/new_cardio_exercise.html', context)
+
 
 def single_workout(request, workout_id):
     if not request.user.is_authenticated:
