@@ -34,7 +34,7 @@ class ResistanceSetForm(forms.ModelForm):
     class Meta:
         model = ResistanceSet
         fields = (
-            'scheme', 'reps', 'intensity', 'load'
+            'scheme', 'reps', 'load', 'intensity'
         )
 
 

@@ -38,5 +38,8 @@
 # How to handle load with cable resistance exercises
 
 
+# SINGLE WORKOUT, if edit: checkbox to show individual same sets
+
+
 
 

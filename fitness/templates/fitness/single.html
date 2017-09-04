@@ -11,7 +11,7 @@
     <!-- NEED TO GET THIS ONLY APPEAR IF IT EXISTS -->
     {% if workout.resistance_scheme %}<h2>Resistance</h2>
 
-      <table border="1">
+      <table class="table table-striped table-sm">
           <tr>
             <th>EXERCISE</th>
             <th>SCHEME</th>
@@ -59,7 +59,7 @@
     {# Interval #}
 
       <caption>Interval</caption>
-      <table border="1">
+      <table class="table table-striped">
         <tr>
           <th>EXERCISE</th>
           <th>ACTION</th>
@@ -82,7 +82,7 @@
     {# Distance #}
   
       <caption>Distance</caption>
-        <table border="1">
+        <table class="table table-striped">
           <tr>
             <th>EXERCISE</th>
             <th>DISTANCE</th>
@@ -111,7 +111,7 @@
 
 {# Repetition #}
 <caption>Repetition</caption>
-<table border="1">
+<table class="table table-striped">
         <tr>
           <th>EXERCISE</th>
           <th>REPETITIONS</th>
@@ -129,7 +129,7 @@
 
 
 
-  <br><br>
+  
   <a href="{% url 'new_resistance_scheme' workout.id %}">Add Resistance Scheme</a> | 
   
   <a href="{% url 'new_cardio_scheme' workout.id %}">Add Cardio Scheme</a>
